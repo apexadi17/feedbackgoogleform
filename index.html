@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface Page</title>
+    <style>
+        body {
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        #transparent-btn {
+            position: absolute;
+            width: 200px; /* Adjust to match your button size */
+            height: 60px;  /* Adjust to match your button size */
+            background: rgba(255, 255, 255, 0); /* Fully transparent */
+            border: 2px solid rgba(255, 255, 255, 0.3); /* Slightly visible border for design */
+            cursor: pointer;
+            border-radius: 10px; /* Smooth button edges */
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden Audio -->
+    <audio id="bgAudio" autoplay loop>
+        <source src="audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Transparent Button (Placed Where Your Interface Button Is) -->
+    <button id="transparent-btn" onclick="openForm()"></button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let audio = document.getElementById("bgAudio");
+            let transparentBtn = document.getElementById("transparent-btn");
+
+            // Try to autoplay audio
+            let playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay blocked. Playing on user interaction.");
+                    document.addEventListener("click", () => {
+                        audio.play();
+                        transparentBtn.style.display = "block"; // Show button
+                    }, { once: true });
+                }).then(() => {
+                    transparentBtn.style.display = "block"; // Show button if autoplay works
+                });
+            } else {
+                transparentBtn.style.display = "block"; // Show button if autoplay works
+            }
+        });
+
+        function openForm() {
+            // Redirect to Google Form
+            window.location.href = "https://forms.gle/L74W5DX3EEgeNEHH6";
+        }
+    </script>
+</body>
+</html>
